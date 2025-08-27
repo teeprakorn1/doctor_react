@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap");
+
+/* ===== Overlay ===== */
+.overlay {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeIn 0.4s ease;
+    z-index: 99;
+}
+
+/* ===== Modal Container ===== */
+.modal {
+    font-family: 'Noto Sans', sans-serif;
+    background: linear-gradient(145deg, #ffffff, #f2f6fc);
+    padding: 2rem 2.5rem;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    border: 2px solid #5190D7;
+    animation: scaleIn 0.4s cubic-bezier(0.23,1,0.32,1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+.modal:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+    border-color: #4177c4;
+}
+
+/* ===== Icon ===== */
+.iconWrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0f0ff;
+}
+.iconWrapper img {
+    width: 50%;
+    height: 50%;
+}
+
+/* ===== Alert Title ===== */
+.alertTitle {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+}
+
+/* ===== Double Divider ===== */
+.doubleDivider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.doubleDivider::before,
+.doubleDivider::after {
+    content: '';
+    width: clamp(30px, 20%, 100px);
+    height: 2px;
+    background-color: #d1d5db;
+}
+
+/* ===== Message ===== */
+.modal h2 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+}
+
+/* ===== Modal Buttons ===== */
+.modalButtons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+.confirmButton {
+    background: linear-gradient(135deg, #0069D2, #004e9f);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,105,210,0.25);
+}
+.confirmButton:hover {
+    background: linear-gradient(135deg, #004e9f, #0069D2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,105,210,0.3);
+}
+.confirmButton:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 12px rgba(0,105,210,0.2);
+}
+.confirmButton:focus {
+    outline: 2px solid #004e9f;
+    outline-offset: 2px;
+}
+
+/* ===== Animations ===== */
+@keyframes scaleIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 360px) {
+    .modal {
+        padding: 1.5rem 1.5rem;
+        width: 95%;
+    }
+    .alertTitle { font-size: 1.2rem; }
+    .modal h2 { font-size: 1rem; }
+    .confirmButton { font-size: 0.9rem; padding: 0.6rem 1.5rem; }
+}

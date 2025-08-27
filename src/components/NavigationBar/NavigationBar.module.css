@@ -1,0 +1,299 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap");
+
+/* General */
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 240px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+    overflow-y: auto;
+    border-right: 1px solid #e6e6e6;
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+.collapsed {
+    transform: translateX(-100%);
+}
+
+.expanded {
+    transform: translateX(0);
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    z-index: 200;
+}
+
+/* Logo */
+.logoContainer {
+    text-align: center;
+    padding: 0.8rem 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.logoContainer:hover {
+    transform: scale(1.05);
+}
+
+.logo {
+    width: 120px;
+    display: block;
+    margin: 0 auto 0.3rem;
+}
+
+/* Admin */
+.RuleLabel {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    color: #257bcc;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.adminName {
+    font-family: 'Poppins', sans-serif;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.linearBlank {
+    margin: 0 20px 20px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* Navbar List */
+.navbarList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.navbarItem {
+    width: 85%;
+    padding: 12px 15px;
+    margin: 6px 0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.navbarItem:hover {
+    background: linear-gradient(90deg, #e6f0ff, #f0f5ff);
+    transform: translateX(2px);
+}
+
+.navbarItem.active {
+    background: linear-gradient(90deg, #d0e3ff, #e0f0ff);
+}
+
+.navbarLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbarLink:hover {
+    color: #0069D2;
+}
+
+.navbarItem.active .navbarLink {
+    color: #004e9f;
+}
+
+/* Logout */
+.logoutButton {
+    margin: 16px auto;
+    width: 85%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #D32F2F, #AC1F21);
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(211, 47, 47, 0.25);
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+    background: linear-gradient(135deg, #AC1F21, #D32F2F);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.35);
+}
+
+
+/* Modal */
+.modal {
+    background: linear-gradient(145deg, #fff, #f0f5ff);
+    padding: 2rem 2.5rem;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+    border: 2px solid #5190D7;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.modal:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.modalMessage {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.confirmButton {
+    background: linear-gradient(135deg, #AC1F21, #D32F2F);
+    color: white;
+    border: none;
+    padding: 0.8rem 2.2rem;
+    cursor: pointer;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 8px 20px rgba(0, 105, 210, 0.25);
+    transition: all 0.3s ease;
+}
+
+.confirmButton:hover {
+    background: linear-gradient(135deg, #D32F2F, #AC1F21);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 105, 210, 0.3);
+}
+
+.cancelButton {
+    background: linear-gradient(135deg, #B0B0B0, #888888);
+    color: #fff;
+    padding: 0.8rem 2.2rem;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(128, 128, 128, 0.25);
+    transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+    background: linear-gradient(135deg, #888, #B0B0B0);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(128, 128, 128, 0.3);
+}
+
+/* Responsive */
+@media (max-width:768px) {
+    .navbar {
+        width: 200px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .navbarItem,
+    .logoutButton {
+        width: 90%;
+    }
+
+    .logo {
+        width: 120px;
+    }
+}
+
+@media (max-width:480px) {
+    .modal {
+        width: 90%;
+        max-width: 320px;
+        padding: 1.5rem 1.8rem;
+    }
+
+    .modalMessage {
+        font-size: 16px;
+    }
+
+    .modalButtons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .confirmButton,
+    .cancelButton {
+        width: 100%;
+        padding: 0.8rem 0;
+    }
+
+    .logo {
+        width: 100px;
+    }
+}
