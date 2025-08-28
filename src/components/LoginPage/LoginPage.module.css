@@ -98,6 +98,35 @@
   color: #9ca3af;
 }
 
+/* ====== Register Button ====== */
+.registerButton {
+  background: transparent;
+  color: #0069d2;
+  border: 2px solid #0069d2;
+  padding: clamp(0.7rem, 3vw, 0.95rem);
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  transition: all 0.3s ease;
+  margin-top: 0rem;
+  box-shadow: 0 4px 12px rgba(0,105,210,0.15);
+}
+
+.registerButton:hover {
+  background: #0069d2;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,105,210,0.25);
+}
+
+.registerButton:disabled {
+  background: #cccccc;
+  color: #666666;
+  border-color: #cccccc;
+  cursor: not-allowed;
+}
+
 /* ====== Password Toggle Button ====== */
 .passwordToggle {
   position: absolute;

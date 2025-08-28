@@ -100,13 +100,13 @@ function LoginPage() {
           className={styles.loginLogo}
           alt="Company Logo"
         />
-        <h1 className={styles.loginTitle}>Login System</h1>
+        <h1 className={styles.loginTitle}>เข้าสู่ระบบ</h1>
 
         <form className={styles.loginForm} onSubmit={handleSubmit} autoComplete="on">
           <InputField
             id="username"
             type="text"
-            placeholder="Email / Username"
+            placeholder="อีเมล / ชื่อผู้ใช้งาน"
             value={Admin_Username}
             onChange={(e) => setUsername(e.target.value)}
             autoFocus
@@ -115,7 +115,7 @@ function LoginPage() {
           <InputField
             id="password"
             type="password"
-            placeholder="Password"
+            placeholder="รหัสผ่าน"
             value={Admin_Password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
@@ -128,7 +128,7 @@ function LoginPage() {
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <label htmlFor="rememberMe">Remember Me</label>
+            <label htmlFor="rememberMe">จดจำฉันเอาไว้</label>
           </div>
 
           <button
@@ -137,6 +137,14 @@ function LoginPage() {
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "LOGIN"}
+          </button>
+
+          <button
+            className={styles.registerButton}
+            type="button"
+            onClick={() => window.location.href = '/register'}
+          >
+            REGISTER
           </button>
         </form>
       </div>

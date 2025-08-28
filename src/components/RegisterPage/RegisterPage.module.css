@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap");
 
 /* ====== Page ====== */
-.loginPage {
+.registerPage {
   font-family: 'Noto Sans', sans-serif;
   background: linear-gradient(to bottom right, rgba(224,240,255,0.6), rgba(255,255,255,0.6)),
               url('../../assets/images/login_background.jpg') no-repeat center top;
@@ -15,48 +15,75 @@
 }
 
 /* ====== Container ====== */
-.loginContainer {
+.registerContainer {
   background: rgba(255,255,255,0.98);
   padding: clamp(2rem, 5vw, 3rem);
   border-radius: 20px;
   box-shadow: 0 12px 45px rgba(0, 0, 0, 0.15);
   width: 90%;
-  max-width: 420px;
+  max-width: 480px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
-.loginContainer:hover {
+.registerContainer:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
 }
 
 /* ====== Logo & Title ====== */
-.loginLogo {
-  width: clamp(70px, 20vw, 150px);
+.registerLogo {
+  width: clamp(70px, 20vw, 100px);
   margin-bottom: 15px;
 }
 
-.loginTitle {
+.registerTitle {
   font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 700;
   margin-bottom: 25px;
-  color: #0069d2;
+  color: #00a86b;
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 /* ====== Form ====== */
-.loginForm {
+.registerForm {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.8rem, 3vw, 1.2rem);
+  gap: clamp(1rem, 3vw, 1.2rem);
+  width: 100%;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
-/* ====== Input Field Wrapper ====== */
+/* ====== Input Field Group ====== */
+.inputFieldGroup, .textareaFieldWrapper, .genderSelectWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.inputFieldGroup label,
+.textareaFieldWrapper label,
+.genderSelectWrapper label {
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* ====== Input Wrapper ====== */
 .inputWrapper {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
   background: #f7f9fc;
   border: 1.5px solid #d1d5db;
   border-radius: 12px;
@@ -65,13 +92,13 @@
 }
 
 .inputWrapper:hover {
-  border-color: #0069d2;
-  background: #f0f5ff;
+  border-color: #00a86b;
+  background: #f0fef6;
 }
 
 .inputWrapper:focus-within {
-  border-color: #0069d2;
-  box-shadow: 0 0 0 4px rgba(0,105,210,0.15);
+  border-color: #00a86b;
+  box-shadow: 0 0 0 4px rgba(0,168,107,0.15);
 }
 
 /* ====== Left Icon ====== */
@@ -88,14 +115,40 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-size: clamp(0.9rem, 3vw, 1.05rem);
-  padding: 0.4rem 0;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  padding: 0.35rem 0;
   outline: none;
   color: #1e293b;
 }
 
 .inputField::placeholder {
   color: #9ca3af;
+}
+
+/* ====== Textarea ====== */
+.textareaField {
+  width: 100%;
+  min-height: 80px;
+  max-height: 130px;
+  resize: vertical;
+  border-radius: 12px;
+  border: 1.5px solid #d1d5db;
+  background: #f7f9fc;
+  padding: 0.5rem 0.75rem;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  color: #1e293b;
+  transition: border 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.textareaField:hover {
+  border-color: #00a86b;
+  background: #f0fef6;
+}
+
+.textareaField:focus {
+  border-color: #00a86b;
+  box-shadow: 0 0 0 4px rgba(0,168,107,0.15);
+  outline: none;
 }
 
 /* ====== Password Toggle Button ====== */
@@ -122,135 +175,94 @@
   height: clamp(18px, 3vw, 22px);
 }
 
-/* ====== Remember Me Checkbox ====== */
-.rememberMe {
+/* ====== Gender Select ====== */
+.genderSelect {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border-radius: 12px;
+  border: 1.5px solid #d1d5db;
+  background: #f7f9fc;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  transition: border 0.3s ease, background 0.3s ease;
+}
+
+.genderSelect:hover {
+  border-color: #00a86b;
+  background: #f0fef6;
+}
+
+.genderSelect:focus {
+  border-color: #00a86b;
+  box-shadow: 0 0 0 4px rgba(0,168,107,0.15);
+  outline: none;
+}
+
+/* ====== Buttons ====== */
+.buttonGroup {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: clamp(0.8rem, 2.5vw, 1rem);
-  margin-top: 0.5rem;
-  cursor: pointer;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
 }
 
-.rememberMe input[type="checkbox"] {
-  appearance: none;
-  width: clamp(18px, 2.5vw, 20px);
-  height: clamp(18px, 2.5vw, 20px);
-  border: 2px solid #d1d5db;
-  border-radius: 5px;
-  background-color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-}
-
-.rememberMe input[type="checkbox"]:hover {
-  border-color: #0069d2;
-}
-
-.rememberMe input[type="checkbox"]:checked {
-  background-color: #0069d2;
-  border-color: #0069d2;
-  animation: popCheck 0.2s ease;
-}
-
-.rememberMe input[type="checkbox"]::after {
-  content: '';
-  width: 30%;
-  height: 55%;
-  border: solid white;
-  border-width: 0 2.5px 2.5px 0;
-  transform: rotate(45deg);
-  display: block;
-  box-sizing: border-box;
-}
-
-@keyframes popCheck {
-  0% { transform: scale(0.7); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-.rememberMe label {
-  cursor: pointer;
-  color: #1e293b;
-  user-select: none;
-  transition: color 0.2s ease;
-}
-
-.rememberMe:hover label {
-  color: #0069d2;
-}
-
-/* ====== Login Button ====== */
-.loginButton {
-  background: linear-gradient(135deg, #0069d2, #004e9f);
+.registerButton {
+  background: linear-gradient(135deg, #00a86b, #007f4f);
   color: white;
   border: none;
-  padding: clamp(0.7rem, 3vw, 0.95rem);
+  padding: clamp(0.8rem, 3vw, 1rem);
   border-radius: 12px;
   font-weight: 700;
   cursor: pointer;
   font-size: clamp(1rem, 3vw, 1.1rem);
   transition: all 0.3s ease;
-  box-shadow: 0 6px 18px rgba(0,105,210,0.25);
-  margin-top: 1.5rem;
+  width: 100%;
 }
 
-.loginButton:hover {
-  background: linear-gradient(135deg, #004e9f, #0069d2);
+.registerButton:hover {
+  background: linear-gradient(135deg, #007f4f, #00a86b);
   transform: translateY(-2px);
-  box-shadow: 0 10px 35px rgba(0, 32, 65, 0.25);
+  box-shadow: 0 10px 35px rgba(0,168,107,0.25);
 }
 
-.loginButton:disabled {
+.registerButton:disabled {
   background: #cccccc;
   cursor: not-allowed;
 }
 
-/* ====== Responsive for Mobile ====== */
+.backButton {
+  background: #f3f4f6;
+  color: #1e293b;
+  border: 2px solid #d1d5db;
+  padding: clamp(0.8rem, 3vw, 1rem);
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.backButton:hover {
+  background: #e2e8f0;
+  border-color: #00a86b;
+  color: #007f4f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,168,107,0.2);
+}
+
+.backButton:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0,128,80,0.2);
+}
+
+/* ====== Responsive ====== */
 @media (max-width: 480px) {
-  .loginContainer {
-    padding: 1.5rem 1rem;
-    width: 95%;
-  }
-
-  .loginTitle {
-    font-size: 1.5rem;
-  }
-
-  .loginButton {
-    font-size: 1rem;
-    padding: 0.65rem 0;
-  }
-
-  .rememberMe {
-    font-size: 0.85rem;
-  }
-
-  .inputField {
-    font-size: 0.95rem;
-  }
-
-  .loginLogo {
-    width: 90px;
-  }
-
-  .inputIcon {
-    width: 18px;
-    height: 18px;
-    margin-right: 0.5rem;
-  }
-
-  .eyeIcon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .loginContainer:hover {
-    transform: none;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  }
+  .registerContainer { max-height: 95vh; }
+  .registerForm { max-height: 75vh; }
+  .registerTitle { font-size: 1.5rem; }
+  .registerButton, .backButton { font-size: 1rem; padding: 0.65rem 0; }
+  .inputField, .textareaField { font-size: 0.95rem; }
+  .registerLogo { width: 90px; }
+  .inputIcon, .eyeIcon { width: 18px; height: 18px; }
+  .registerContainer:hover { transform: none; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
 }
