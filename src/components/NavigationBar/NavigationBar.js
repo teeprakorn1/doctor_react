@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { format } from 'date-fns';
 import styles from "./NavigationBar.module.css";
 import Logo from "../../assets/logo/logo.svg";
 import { encryptValue, decryptValue } from "../../utils/crypto";
 import { ReactComponent as MainIcon } from "../../assets/icons/main_icon.svg";
-import { ReactComponent as DashboardIcon } from "../../assets/icons/dashboard_icon.svg";
-import { ReactComponent as ActivityIcon } from "../../assets/icons/activity_icon.svg";
-import { ReactComponent as ApplicationIcon } from "../../assets/icons/application_icon.svg";
-import { ReactComponent as NameRegisterIcon } from "../../assets/icons/name_register_icon.svg";
-import { ReactComponent as StaffManagementIcon } from "../../assets/icons/staff_management_icon.svg";
+import { ReactComponent as DoctorIcon } from "../../assets/icons/name_register_icon.svg";
+import { ReactComponent as PatientIcon } from "../../assets/icons/staff_management_icon.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/icons/logout_icon.svg";
 import { ReactComponent as MenuIcon } from "../../assets/icons/menu_icon.svg";
 import CustomModal from "../../services/CustomModal/CustomModal";
@@ -28,7 +24,6 @@ const NavigationBar = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const [Data_UsersType, setUsersType] = useState("");
-  const [Data_Email, setEmail] = useState("");
   const [isLoadingUserType, setIsLoadingUserType] = useState(true);
   const [Admin, setAdmin] = useState({ firstName: "", lastName: "", typeName: "" });
 
@@ -92,13 +87,12 @@ const NavigationBar = () => {
 
       if (!verifyResponse.data.status) throw new Error("Invalid token");
 
-      const { Users_Type, Users_Email } = verifyResponse.data;
+      const { Users_Type } = verifyResponse.data;
       setUsersType(Users_Type);
-      setEmail(Users_Email);
       sessionStorage.setItem("UsersType", encryptValue(Users_Type));
 
       const profileResponse = await axios.get(
-        getApiUrl(process.env.REACT_APP_API_ADMIN_GET_WEBSITE),
+        getApiUrl(process.env.REACT_APP_API_GET_PROFILE_WEBSITE),
         { withCredentials: true }
       );
 
@@ -108,17 +102,17 @@ const NavigationBar = () => {
         let lastName = "";
         let typeName = "";
 
-        if (profile.Users_Type_Table === "teacher") {
-          firstName = profile.Teacher_FirstName || "";
-          lastName = profile.Teacher_LastName || "";
-          typeName = "Teacher";
-        } else if (profile.Users_Type_Table === "staff") {
-          firstName = profile.Staff_FirstName || "";
-          lastName = profile.Staff_LastName || "";
-          typeName = "Staff";
+        if (profile.Users_Type_Table === "doctor") {
+          firstName = profile.Doctor_FirstName || "";
+          lastName = profile.Doctor_LastName || "";
+          typeName = "Doctor";
+        } else if (profile.Users_Type_Table === "patient") {
+          firstName = profile.Patient_FirstName || "";
+          lastName = profile.Patient_LastName || "";
+          typeName = "Patient";
         } else {
-          firstName = profile.Staff_FirstName || profile.Teacher_FirstName || "Unknown";
-          lastName = profile.Staff_LastName || profile.Teacher_LastName || "Unknown";
+          firstName = profile.Doctor_FirstName || profile.Doctor_FirstName || "Unknown";
+          lastName = profile.Doctor_LastName || profile.Patient_LastName || "Unknown";
           typeName = profile.Users_Type_Table || "Unknown";
         }
 
@@ -153,35 +147,18 @@ const NavigationBar = () => {
     }
 
     const userType = Data_UsersType?.trim().toLowerCase() || "";
+    const accessMap = {
+      patient: ["/main", "/patient"],
+      doctor: ["/main", "/doctor"],
+    };
 
-    const allowedPaths = ["/main", "/dashboard", "/activity", "/application", "/name-register", "/staff-management"];
+    const defaultAllowed = ["/main"];
+    const allowedPaths = accessMap[userType] || defaultAllowed;
+
     if (!allowedPaths.includes(path)) {
-      setAlertMessage("หน้าที่คุณเข้าถึงไม่ถูกต้อง.");
-      setIsAlertModalOpen(true);
-      return closeNavbarOnMobile();
-    }
-
-    if (userType === "staff") {
-      setActivePath(path);
-      navigate(path);
-      return closeNavbarOnMobile();
-    }
-
-    const restrictedForTeacher = ["/activity", "/staff-management", "/application"];
-    if (userType === "teacher" && restrictedForTeacher.includes(path)) {
       setAlertMessage("คุณไม่มีสิทธิ์เข้าถึงหน้านี้.");
       setIsAlertModalOpen(true);
       return closeNavbarOnMobile();
-    }
-
-
-    if (userType !== "teacher" && userType !== "staff") {
-      const allowedForOther = ["/main", "/dashboard", "/name-register"];
-      if (!allowedForOther.includes(path)) {
-        setAlertMessage("คุณไม่มีสิทธิ์เข้าถึงหน้านี้.");
-        setIsAlertModalOpen(true);
-        return closeNavbarOnMobile();
-      }
     }
 
     setActivePath(path);
@@ -191,18 +168,6 @@ const NavigationBar = () => {
 
   const handleLogout = async () => {
     try {
-      const currentTimestamp = format(new Date(), 'dd/MM/yyyy HH:mm:ss');
-      const message = `Logout success use by ${Data_Email} at ${currentTimestamp} In Website.`;
-
-      await axios.post(
-        getApiUrl(process.env.REACT_APP_API_TIMESTAMP_WEBSITE_INSERT),
-        {
-          Timestamp_Name: message,
-          TimestampType_ID: 4
-        },
-        { withCredentials: true }
-      );
-
       await axios.post(getApiUrl(process.env.REACT_APP_API_LOGOUT_WEBSITE), {}, { withCredentials: true });
 
     } catch (err) {
@@ -232,7 +197,7 @@ const NavigationBar = () => {
 
       <div className={`${styles.navbar} ${isCollapsed ? styles.collapsed : styles.expanded}`}>
         <div className={styles.logoContainer} onClick={() => handleNavigation("/main")}>
-          <img src={Logo} alt="BusitPlus Logo" className={styles.logo} />
+          <img src={Logo} alt="Doctor Logo" className={styles.logo} />
         </div>
 
         <div className={styles.RuleLabel}>{Admin.typeName}</div>
@@ -243,20 +208,11 @@ const NavigationBar = () => {
           <li className={`${styles.navbarItem} ${activePath === "/main" ? styles.active : ""}`} onClick={() => handleNavigation("/main")}>
             <span className={styles.navbarLink}><MainIcon width="20" height="20" /> หน้าหลัก</span>
           </li>
-          <li className={`${styles.navbarItem} ${activePath === "/dashboard" ? styles.active : ""}`} onClick={() => handleNavigation("/dashboard")}>
-            <span className={styles.navbarLink}><DashboardIcon width="20" height="20" /> แดชบอร์ด</span>
+          <li className={`${styles.navbarItem} ${activePath === "/patient" ? styles.active : ""}`} onClick={() => handleNavigation("/patient")}>
+            <span className={styles.navbarLink}><DoctorIcon width="20" height="20" /> เฉพาะผู้ป่วย</span>
           </li>
-          <li className={`${styles.navbarItem} ${activePath === "/activity" ? styles.active : ""}`} onClick={() => handleNavigation("/activity")}>
-            <span className={styles.navbarLink}><ActivityIcon width="20" height="20" /> จัดการกิจกรรม</span>
-          </li>
-          <li className={`${styles.navbarItem} ${activePath === "/application" ? styles.active : ""}`} onClick={() => handleNavigation("/application")}>
-            <span className={styles.navbarLink}><ApplicationIcon width="20" height="20" /> จัดการแอปพลิเคชัน</span>
-          </li>
-          <li className={`${styles.navbarItem} ${activePath === "/name-register" ? styles.active : ""}`} onClick={() => handleNavigation("/name-register")}>
-            <span className={styles.navbarLink}><NameRegisterIcon width="20" height="20" /> ทะเบียนรายชื่อ</span>
-          </li>
-          <li className={`${styles.navbarItem} ${activePath === "/staff-management" ? styles.active : ""}`} onClick={() => handleNavigation("/staff-management")}>
-            <span className={styles.navbarLink}><StaffManagementIcon width="20" height="20" /> จัดการเจ้าหน้าที่</span>
+          <li className={`${styles.navbarItem} ${activePath === "/doctor" ? styles.active : ""}`} onClick={() => handleNavigation("/doctor")}>
+            <span className={styles.navbarLink}><PatientIcon width="20" height="20" /> เฉพาะแพทย์</span>
           </li>
         </ul>
 

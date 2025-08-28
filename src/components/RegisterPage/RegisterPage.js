@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './LoginPage.module.css';
+import styles from './RegisterPage.module.css';
 import InputField from './InputField';
 import axios from "axios";
 import CustomModal from '../../services/CustomModal/CustomModal';
@@ -9,7 +9,7 @@ const getApiUrl = (endpoint) => {
   return `${process.env.REACT_APP_SERVER_PROTOCOL}${process.env.REACT_APP_SERVER_BASE_URL}${process.env.REACT_APP_SERVER_PORT}${endpoint}`;
 };
 
-function LoginPage() {
+function RegisterPage() {
   const [Admin_Username, setUsername] = useState("");
   const [Admin_Password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -150,4 +150,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default RegisterPage;
