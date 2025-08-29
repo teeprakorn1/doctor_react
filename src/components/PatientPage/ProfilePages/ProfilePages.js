@@ -162,7 +162,7 @@ function ProfilePages() {
 
         try {
             const res = await axios.put(
-                getApiUrl("/api/profile/patient/update"),
+                getApiUrl(process.env.REACT_APP_API_UPDATE_PROFILE_WEBSITE),
                 updateData,
                 { withCredentials: true }
             );

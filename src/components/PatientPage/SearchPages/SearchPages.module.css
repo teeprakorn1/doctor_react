@@ -8,7 +8,7 @@
   --text-dark: #374151;
   --text-muted: #6b7280;
   --card-bg: #ffffff;
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow: 0 12px 28px rgba(37, 99, 235, 0.12);
 }
 
 /* Main Container */
@@ -52,45 +52,175 @@
   color: var(--text-dark);
   font-size: 28px;
   font-weight: 700;
-  padding-left: 0;
-  transition: padding-left 0.3s ease;
 }
 
-/* Dashboard Section */
-.dashboardSection {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: var(--card-bg);
-  padding: 24px;
-  border-radius: 14px;
-  box-shadow: var(--shadow);
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--text-dark);
+/* Header Right */
+.headerRight {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 15px;
+  margin-left: auto;
+  justify-content: flex-end;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+/* Center Card */
+.centerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  background: #ffffff;
+  padding: 36px 48px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.15), 0 0 10px rgba(37, 99, 235, 0.05);
+  width: 100%;
+  max-width: 750px;
+  margin: 40px auto 60px auto;
+  border: 1px solid #e0e7ff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.centerCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2), 0 0 15px rgba(37, 99, 235, 0.05);
+}
+
+/* Tip Box */
+.tipBox {
+  width: 100%;
+  background: #e0f2fe;
+  color: #1e40af;
+  padding: 22px 26px;
+  border-radius: 16px;
+  font-size: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+
+.tipBox::before {
+  content: none;
+}
+
+.tipIcon {
+  color: #2563eb;
+}
+
+.tipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tipItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tipItem strong {
+  color: #1e40af;
+}
+
+/* Search Card */
+.searchCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.searchLabel {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: var(--text-dark);
+}
+
+.searchInner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card-bg);
+  padding: 16px 22px;
+  border-radius: 18px;
+  border: 1px solid #cbd5e1;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.searchInner:hover {
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.25);
+  transform: translateY(-2px);
+}
+
+.searchInput {
+  flex-grow: 1;
+  padding: 14px 16px;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  background: transparent;
+  border-radius: 10px;
+}
+
+.searchInput::placeholder {
+  color: var(--text-muted);
+}
+
+.searchButton {
+  background: var(--primary-color);
+  color: white;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.searchButton:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.searchButton:active {
+  transform: scale(0.97);
+}
+
+/* Divider between search */
+.searchCard+.searchCard::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: #e5e7eb;
+  margin: 20px 0;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .mainContent {
-    margin-left: 0;
-    padding: 15px 20px;
+  .centerCard {
+    margin: 16px 16px 24px 16px;
+    padding: 28px 24px;
+    gap: 24px;
+    align-items: stretch;
   }
 
-  .dashboardSection {
-    grid-template-columns: 1fr;
+  .tipBox {
+    padding: 18px 20px;
+  }
+
+  .searchInner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .searchInput,
+  .searchButton {
+    width: 100%;
   }
 
   .headerBar {

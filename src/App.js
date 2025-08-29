@@ -11,6 +11,7 @@ import PatientPage from './components/PatientPage/PatientPage';
 import DoctorPage from './components/DoctorPage/DoctorPage';
 
 import SearchPages from './components/PatientPage/SearchPages/SearchPages';
+import SelectDoctorPage from './components/PatientPage/SearchPages/SelectDoctorPage/SelectDoctorPage';
 import AppointmentPages from './components/PatientPage/AppointmentPages/AppointmentPages';
 import ProfilePages from './components/PatientPage/ProfilePages/ProfilePages';
 import EditProfilePages from './components/PatientPage/ProfilePages/EditProfilePages/EditProfilePages';
@@ -39,6 +40,7 @@ function App() {
 
         {/* Patient Routes */}
         <Route path='/patient/search' element={<ProtectedRoute><SearchPages /></ProtectedRoute>} />
+        <Route path='/patient/search/select-doctor' element={<ProtectedRoute><SelectDoctorPage /></ProtectedRoute>} />
         <Route path='/patient/appointment' element={<ProtectedRoute><AppointmentPages /></ProtectedRoute>} />
         <Route path='/patient/profile' element={<ProtectedRoute><ProfilePages /></ProtectedRoute>} />
         <Route path='/patient/profile/edit-profile' element={<ProtectedRoute><EditProfilePages /></ProtectedRoute>} />

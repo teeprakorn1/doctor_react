@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Navbar from '../../NavigationBar/NavigationBar';
+import Navbar from '../../../NavigationBar/NavigationBar';
 import { useLocation } from 'react-router-dom';
-import styles from './AppointmentPages.module.css';
+import styles from './SelectDoctorPage.module.css';
 import { useNavigate } from 'react-router-dom'
+import { decryptValue } from "../../../../utils/crypto";
 import { Calendar } from 'lucide-react';
 import axios from 'axios';
 
@@ -10,7 +11,7 @@ const getApiUrl = (endpoint) => {
     return `${process.env.REACT_APP_SERVER_PROTOCOL}${process.env.REACT_APP_SERVER_BASE_URL}${process.env.REACT_APP_SERVER_PORT}${endpoint}`;
 };
 
-function AppointmentPages() {
+function SelectDoctorPage() {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
     const [Doctors, setDoctors] = useState([]);
@@ -24,7 +25,28 @@ function AppointmentPages() {
     const rowsPerPage = 10;
     const [specialty, setSpecialty] = useState('');
     const [doctorName, setDoctorName] = useState('');
+    const [isAuthorized, setIsAuthorized] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const sessionUsersTypeRaw = sessionStorage.getItem("UsersType");
+        let userType = "";
+
+        if (sessionUsersTypeRaw) {
+            try {
+                userType = decryptValue(sessionUsersTypeRaw)?.trim().toLowerCase();
+            } catch (err) {
+                console.error("Failed to decrypt UsersType:", err);
+            }
+        }
+
+        if (userType === "patient") {
+            setIsAuthorized(true);
+        } else {
+            setIsAuthorized(false);
+            navigate("/main");
+        }
+    }, [navigate]);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -78,7 +100,7 @@ function AppointmentPages() {
                 alert("นัดแพทย์เรียบร้อยแล้ว");
                 setModalOpen(false);
 
-                navigate('/patient/appointment-status');
+                navigate('/patient/appointment');
             } else {
                 alert("เกิดข้อผิดพลาด: " + res.data.message);
             }
@@ -147,6 +169,11 @@ function AppointmentPages() {
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
     if (loading) return <div>Loading...</div>;
+
+
+    if (isAuthorized === null) {
+        return <div>กำลังตรวจสอบสิทธิ์...</div>;
+    }
 
     return (
         <div className={styles.container}>
@@ -260,4 +287,4 @@ function AppointmentPages() {
     );
 }
 
-export default AppointmentPages;
+export default SelectDoctorPage;
