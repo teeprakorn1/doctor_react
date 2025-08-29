@@ -59,53 +59,135 @@
 /* Dashboard Section */
 .dashboardSection {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
 }
 
+/* Profile Card */
+.profileCard {
+  background: var(--card-bg);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  color: var(--text-dark);
+  font-size: 17px;
+  line-height: 1.75;
+  max-width: 680px;
+  margin: 0 auto;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.profileCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
+}
+
+.profileCard p {
+  margin: 16px 0;
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+.profileCard input,
+.profileCard textarea,
+.profileCard select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #fafafa;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.profileCard input:focus,
+.profileCard textarea:focus,
+.profileCard select:focus {
+  border-color: var(--primary-color);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Buttons */
+.editBtn,
+.saveBtn,
+.cancelBtn {
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-right: 12px;
+  border: none;
+}
+
+.editBtn {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.editBtn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.saveBtn {
+  background: #16a34a;
+  color: #fff;
+}
+
+.saveBtn:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+}
+
+.cancelBtn {
+  background: #ef4444;
+  color: #fff;
+}
+
+.cancelBtn:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* Dashboard Card */
 .card {
   background: var(--card-bg);
-  padding: 24px;
-  border-radius: 14px;
-  box-shadow: var(--shadow);
-  font-size: 18px;
-  font-weight: 500;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  font-size: 20px;
+  font-weight: 600;
   color: var(--text-dark);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .mainContent {
     margin-left: 0;
-    padding: 15px 20px;
+    padding: 18px 22px;
   }
 
   .dashboardSection {
     grid-template-columns: 1fr;
   }
 
-  .headerBar {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .headerRight {
-    width: auto;
-    justify-content: flex-end;
-  }
-
   .heading {
-    padding-left: 50px;
-    font-size: 22px;
+    font-size: 24px;
   }
 }
