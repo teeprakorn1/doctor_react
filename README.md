@@ -84,9 +84,9 @@ The app can be deployed on **Windows Server** with **NGINX reverse proxy**, **Le
 
 ## 📸 Screenshots (Placeholder)
 
-| Home Screen | Map Screen | Title Screen | Infomation Screen | Search Screen |
-|-------------|----------------|----------------|----------------|----------------|
-| ![](screenshots/home_screen.jpg) | ![](screenshots/map_screen.jpg) | ![](screenshots/title_screen.jpg) | ![](screenshots/information_screen.jpg) | ![](screenshots/search_screen.jpg) |
+| Search Screen | Attention Schedule Screen | Shedule Screen | Doctor Screen | Main Screen | Register Screen | login Screen |
+|-------------|----------------|----------------|----------------|----------------|----------------|----------------|
+| ![](screenshots/search_screen.png) | ![](screenshots/attention_schedule_screen.png) | ![](screenshots/shedule_screen.png) | ![](screenshots/doctor_screen.png) | ![](screenshots/main_screen.png) | ![](screenshots/register_screen.png) | ![](screenshots/login_screen.png) |
 
 ---
 
