@@ -17,6 +17,7 @@ import ProfilePages from './components/PatientPage/ProfilePages/ProfilePages';
 import EditProfilePages from './components/PatientPage/ProfilePages/EditProfilePages/EditProfilePages';
 
 import RequestAttentionPages from './components/DoctorPage/RequestAttentionPages/RequestAttentionPages';
+import AttentionSchedulePages from './components/DoctorPage/AttentionSchedulePages/AttentionSchedulePages';
 import SchedulePages from './components/DoctorPage/SchedulePages/SchedulePages';
 
 const ProtectedRoute = ({ children }) => {
@@ -47,6 +48,7 @@ function App() {
 
         {/* Doctor Routes */}
         <Route path='/doctor/request-attention' element={<ProtectedRoute><RequestAttentionPages /></ProtectedRoute>} />
+        <Route path='/doctor/attention-schedule' element={<ProtectedRoute><AttentionSchedulePages /></ProtectedRoute>} />
         <Route path='/doctor/schedule' element={<ProtectedRoute><SchedulePages /></ProtectedRoute>} />
 
         {/* 404 Page */}

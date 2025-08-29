@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../NavigationBar/NavigationBar';
 import styles from './DoctorPage.module.css';
 import { useNavigate } from "react-router-dom";
-import { FiInbox , FiCalendar } from "react-icons/fi";
+import { FiInbox , FiCalendar, FiClipboard } from "react-icons/fi";
 import { decryptValue } from "../../utils/crypto";
 
 function DoctorPage() {
@@ -66,6 +66,10 @@ function DoctorPage() {
           <div className={`${styles.card} ${styles.card01}`} onClick={() => navigate("/doctor/request-attention")}>
             <FiInbox size={36} />
             <span>คำขอการพบแพทย์</span>
+          </div>
+          <div className={`${styles.card} ${styles.card01}`} onClick={() => navigate("/doctor/attention-schedule")}>
+            <FiClipboard size={36} />
+            <span>กำหนดการพบผู้ป่วย</span>
           </div>
           <div className={`${styles.card} ${styles.card01}`} onClick={() => navigate("/doctor/schedule")}>
             <FiCalendar size={36} />

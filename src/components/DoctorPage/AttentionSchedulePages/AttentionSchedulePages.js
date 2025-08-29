@@ -3,22 +3,23 @@ import Navbar from '../../NavigationBar/NavigationBar';
 import { useNavigate } from "react-router-dom";
 import { decryptValue } from "../../../utils/crypto";
 import axios from 'axios';
-import styles from './RequestAttentionPages.module.css';
+import styles from './AttentionSchedulePages.module.css';
 
 const getApiUrl = (endpoint) => {
   return `${process.env.REACT_APP_SERVER_PROTOCOL}${process.env.REACT_APP_SERVER_BASE_URL}${process.env.REACT_APP_SERVER_PORT}${endpoint}`;
 };
 
-function RequestAttentionPages() {
+function AttentionSchedulePages() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
   const [isAuthorized, setIsAuthorized] = useState(null);
-  const [requests, setRequests] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
   const navigate = useNavigate();
 
+  // ตรวจสอบสิทธิ์
   useEffect(() => {
     const sessionUsersTypeRaw = sessionStorage.getItem("UsersType");
     let userType = "";
@@ -39,6 +40,7 @@ function RequestAttentionPages() {
     }
   }, [navigate]);
 
+  // Responsive
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
@@ -49,54 +51,32 @@ function RequestAttentionPages() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Fetch Appointments
   useEffect(() => {
-    const fetchRequests = async () => {
+    const fetchAppointments = async () => {
       try {
-        const res = await axios.get(getApiUrl(process.env.REACT_APP_API_APPOINTMENT_PENDING), { withCredentials: true });
+        const res = await axios.get(getApiUrl(process.env.REACT_APP_API_APPOINTMENT_SCHEDULE), { withCredentials: true });
         if (res.data.status) {
-          setRequests(res.data.data);
+          setAppointments(res.data.data);
         } else {
-          setRequests([]);
+          setAppointments([]);
         }
       } catch (err) {
         console.error(err);
-        setRequests([]);
+        setAppointments([]);
       } finally {
         setLoading(false);
       }
     };
-    fetchRequests();
+    fetchAppointments();
   }, []);
 
   // Pagination
-  const totalPages = Math.ceil(requests.length / rowsPerPage);
+  const totalPages = Math.ceil(appointments.length / rowsPerPage);
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = requests.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = appointments.slice(indexOfFirstRow, indexOfLastRow);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-  const handleAction = async (appointmentId, action) => {
-    try {
-      const res = await axios.post(getApiUrl(process.env.REACT_APP_API_APPOINTMENT_ACTION), {
-        appointmentId,
-        action
-      }, { withCredentials: true });
-
-      if (res.data.status) {
-        setRequests(prev =>
-          prev.map(r => r.Appointment_ID === appointmentId
-            ? { ...r, status: action, AppointmentStatus_Description: action === 'Confirmed' ? 'ได้รับการยืนยันแล้ว' : 'ยกเลิกการนัดหมาย' }
-            : r
-          )
-        );
-      } else {
-        alert("เกิดข้อผิดพลาด: " + res.data.message);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("เกิดข้อผิดพลาดในการอัปเดตสถานะ");
-    }
-  };
 
   if (isAuthorized === null) return <div>กำลังตรวจสอบสิทธิ์...</div>;
   if (loading) return <div>Loading...</div>;
@@ -114,7 +94,7 @@ function RequestAttentionPages() {
           ${sidebarOpen && !isMobile ? styles.contentShift : ""}`}
       >
         <div className={styles.headerBar}>
-          <h1 className={styles.heading}>คำขอการพบแพทย์</h1>
+          <h1 className={styles.heading}>กำหนดการพบผู้ป่วย</h1>
         </div>
 
         <div className={styles.DoctorSection}>
@@ -122,35 +102,28 @@ function RequestAttentionPages() {
             <table className={styles.DoctorTable}>
               <thead>
                 <tr>
-                  <th>รหัสคำขอ</th>
+                  <th>รหัสนัด</th>
                   <th>ชื่อผู้ป่วย</th>
                   <th>วัน / เวลา</th>
                   <th>สถานะ</th>
-                  <th>การดำเนินการ</th>
                 </tr>
               </thead>
               <tbody>
-                {currentRows.length > 0 ? currentRows.map(req => {
-                  const formattedDate = new Date(req.Availability_Date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                {currentRows.length > 0 ? currentRows.map(app => {
+                  const formattedDate = new Date(app.Availability_Date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' });
                   return (
-                    <tr key={req.Appointment_ID}>
-                      <td>{req.Appointment_ID}</td>
-                      <td>{req.Patient_FirstName} {req.Patient_LastName}</td>
-                      <td>{formattedDate} {req.Availability_StartTime} - {req.Availability_EndTime}</td>
-                      <td className={styles[`status_${req.status}`]}>{req.status} - {req.AppointmentStatus_Description}</td>
-                      <td>
-                        {req.status === 'Pending' ? (
-                          <>
-                            <button className={styles.approveBtn} onClick={() => handleAction(req.Appointment_ID, 'Confirmed')}>อนุมัติ</button>
-                            <button className={styles.rejectBtn} onClick={() => handleAction(req.Appointment_ID, 'Cancelled')}>ปฏิเสธ</button>
-                          </>
-                        ) : <span>—</span>}
+                    <tr key={app.Appointment_ID}>
+                      <td>{app.Appointment_ID}</td>
+                      <td>{app.Patient_FirstName} {app.Patient_LastName}</td>
+                      <td>{formattedDate} {app.Availability_StartTime} - {app.Availability_EndTime}</td>
+                      <td className={styles[`status_${app.status}`]}>
+                        {app.status} - {app.AppointmentStatus_Description}
                       </td>
                     </tr>
                   );
                 }) : (
                   <tr>
-                    <td colSpan="6" style={{ textAlign: "center" }}>ไม่มีคำขอการพบแพทย์</td>
+                    <td colSpan="5" style={{ textAlign: "center" }}>ไม่มีนัดหมายในระบบ</td>
                   </tr>
                 )}
               </tbody>
@@ -172,4 +145,4 @@ function RequestAttentionPages() {
   );
 }
 
-export default RequestAttentionPages;
+export default AttentionSchedulePages;
