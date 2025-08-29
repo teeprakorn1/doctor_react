@@ -5,7 +5,7 @@ import styles from './MainPages.module.css';
 function MainPages() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
- 
+
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
@@ -30,6 +30,17 @@ function MainPages() {
       >
         <div className={styles.headerBar}>
           <h1 className={styles.heading}>หน้าหลัก</h1>
+        </div>
+
+        <div className={styles.welcomeSection}>
+          <h2>ยินดีต้อนรับเข้าสู่ระบบ</h2>
+          <p>
+            ระบบนี้ช่วยให้คุณสามารถจัดการนัดหมายผู้ป่วย ดูตารางแพทย์ และติดตามสถานะการพบแพทย์ได้อย่างง่ายดาย
+            กรุณาเลือกเมนูด้านซ้ายเพื่อเริ่มต้นใช้งาน
+          </p>
+          <p>
+            หากคุณเป็นแพทย์ คุณสามารถเพิ่มเวลาว่าง ตรวจสอบคำขอการนัดหมาย และอัปเดตสถานะนัดหมายของผู้ป่วยได้
+          </p>
         </div>
       </main>
     </div>
